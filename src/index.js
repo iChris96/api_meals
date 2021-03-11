@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const port = 3000;
-const mealsRoutes = require('./routes/MealsRoutes')
+const mealsRoutes = require('./routes/MealsRoutes');
+const ordersRoutes = require('./routes/OrdersRoutes')
 
 // Api config
 const app = express();
@@ -14,6 +15,7 @@ mongoose.connect('mongodb://localhost:27017/meals', { useNewUrlParser: true, use
 
 // Routes config
 app.use('/meals', mealsRoutes);
+app.use('/orders', ordersRoutes)
 
 app.get('*', (req, res) => {
     res.send("welcome to meals api");
