@@ -1,5 +1,6 @@
 const express = require('express');
 const Meals = require('../models/Meals');
+const { isAuthenticated } = require('../auth');
 
 const router = express.Router();
 
@@ -16,20 +17,20 @@ router.get('/:id', (req, res) => {
         .then(x => res.status(200).send(x));
 })
 
-router.post('/', (req, res) => {
+router.post('/', isAuthenticated, (req, res) => {
     const data = req.body;
     Meals.create(data)
         .then(x => res.status(201).send(x));
 })
 
-router.put('/:id', (req, res) => {
+router.put('/:id', isAuthenticated, (req, res) => {
     const id = req.params.id;
     const data = req.body;
     Meals.findOneAndUpdate(id, data)
         .then(() => res.sendStatus(204));
 })
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', isAuthenticated, (req, res) => {
     const id = req.params.id;
     const data = req.body;
     Meals.findOneAndDelete(id, data)
